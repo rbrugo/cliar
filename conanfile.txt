@@ -1,0 +1,13 @@
+[requires]
+fmt/[>=10.2.0]
+
+[options]
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout
+
+#  conan install conanfile.txt --build=missing --settings=build_type=Release
