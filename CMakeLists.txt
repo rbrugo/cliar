@@ -12,8 +12,6 @@
 cmake_minimum_required(VERSION 3.22.2)
 
 project(cliar VERSION 0.1.1 LANGUAGES CXX)
-include(cmake/general.cmake)
-include(cmake/functions.cmake)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
@@ -32,24 +30,19 @@ find_package(fmt REQUIRED)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 add_library(project_warnings INTERFACE)
 include(cmake/compiler_warnings.cmake)
-set_project_warnings(project_warnings)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 #                                 cliar                                  #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 add_library(cliar INTERFACE)
-# target_sources(cliar PRIVATE main.cpp)
 target_compile_features(cliar INTERFACE cxx_std_23)
 target_compile_definitions(cliar INTERFACE NTEST)
 target_link_libraries(cliar INTERFACE fmt::fmt project_warnings)
-# target_link_options(cliar PRIVATE -fuse-ld=mold)
 target_include_directories(cliar
     INTERFACE
         "${CMAKE_CURRENT_LIST_DIR}/include"
     SYSTEM
         "${CMAKE_CURRENT_LIST_DIR}/include/third_party"
 )
-enable_sanitizers(cliar)
-enable_lto(cliar)
 
 
 option(ENABLE_TESTS "Enable tests for cliar" ON)
